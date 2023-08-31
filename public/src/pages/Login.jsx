@@ -22,6 +22,13 @@ const toastOptions = {
   draggable: true,
   theme: "dark",
 };
+
+useEffect (() => {
+  if(localStorage.getItem('chat-app-user')){
+    navigate('/');
+  }
+}, []);
+
 const handleValidation = () => {
   const { username, password } = values;
 
