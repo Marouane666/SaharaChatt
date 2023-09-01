@@ -21,7 +21,20 @@ function SetAvatar() {
     draggable: true,
     theme: "dark",
   };
-  const fetchData = async () => {
+
+  useEffect(() => {
+    async function checkLocalStorage() {
+      if (!localStorage.getItem("chat-app-user")) {
+        navigate("/login");
+      }
+    }
+  
+    checkLocalStorage();
+  }, []);
+  
+  
+    
+    const fetchData = async () => {
     const data = [];
     for(let i=0; i<4; i++ ){
       const image = await axios.get(
@@ -36,7 +49,7 @@ function SetAvatar() {
 
   }
   const setProfilePicture = async () => {
-    if(selectedAvatar===undefined){
+    if(selectedAvatar === undefined){
       toast.error("Please select an avatar", toastOptions);
 
     }else {
@@ -44,7 +57,8 @@ function SetAvatar() {
       const {data} = await axios.post(`${setAvatarRoute}/${user._id}`, {
         image: avatars[selectedAvatar],
       });
-
+      console.log("")
+      console.log(data);
       if(data.isSet) {
         user.isAvatarImageSet = true;
         user.avatarImage = data.image;
